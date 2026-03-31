@@ -22,13 +22,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Pencil, Trash2 } from "lucide-react";
-import { Item } from "./menu-types";
+import { MenuItem } from "../shared/item-types";
 
 type ItemCardProps = {
-  item: Item;
+  item: MenuItem;
   onDelete: (id: string) => void;
   onToggle: (id: string) => void;
-  onEdit: (item: Item) => void;
+  onEdit: (item: MenuItem) => void;
 };
 
 export function ItemCard({ item, onDelete, onToggle, onEdit }: ItemCardProps) {
@@ -39,7 +39,11 @@ export function ItemCard({ item, onDelete, onToggle, onEdit }: ItemCardProps) {
       className={`transition-all duration-300 overflow-hidden ${!item.is_available ? "opacity-60" : ""}`}
     >
       {image && (
-        <img src={image} alt={item.name} className="w-full h-36 object-cover" />
+        <img
+          src={image}
+          alt={item.name}
+          className="w-full h-72 object-contain"
+        />
       )}
 
       <CardHeader className="pb-2">

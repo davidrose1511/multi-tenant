@@ -25,7 +25,7 @@ import { TeamSwitcher } from "./team-switcher";
 const navItems = [
   { title: "Overview", url: "/protected", icon: LayoutDashboard },
   { title: "Orders", url: "/protected/orders", icon: ShoppingBag },
-  { title: "Menu", url: "/protected/menu", icon: UtensilsCrossed },
+  { title: "Menu", url: "/protected/items", icon: UtensilsCrossed },
   { title: "Customers", url: "/protected/customers", icon: Users2 },
   { title: "Settings", url: "/protected/settings", icon: Settings },
 ];

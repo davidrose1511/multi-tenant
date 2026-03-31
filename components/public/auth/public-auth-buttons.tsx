@@ -16,15 +16,10 @@ export async function PublicAuthButton({ slug }: Props) {
       <span className="text-sm text-muted-foreground hidden sm:block">
         {user.email}
       </span>
-      <PublicLogoutButton slug={slug} />
+      <PublicLogoutButton />
     </div>
   ) : (
-    <Button
-      asChild
-      size="sm"
-      style={{ backgroundColor: "var(--theme-color)" }}
-      className="text-white hover:opacity-90"
-    >
+    <Button asChild size="sm">
       <Link href={`/${slug}/login`}>
         <User className="h-4 w-4 mr-1.5" />
         Sign in

@@ -52,7 +52,12 @@ export function CustomerSignUpForm({ slug, businessId }: Props) {
       email: values.email,
       password: values.password,
       options: {
-        data: { name: values.name, business_id: businessId },
+        data: {
+          name: values.name,
+          business_id: businessId,
+          role: "customer",
+          slug: slug,
+        },
       },
     });
     if (error) {

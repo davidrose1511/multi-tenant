@@ -3,23 +3,16 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
-import { Item, Category } from "./menu-types";
-import { ItemForm } from "./item-dialog";
+import { MenuItem } from "../shared/item-types";
+import { MenuForm } from "./menu-dialog";
 
-export function useMenu(
-  businessId: string,
-  initialCategories: Category[],
-  initialItems: Item[],
-) {
-  const [items, setItems] = useState<Item[]>(initialItems);
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+export function useMenu(businessId: string, initialItems: MenuItem[]) {
+  const [items, setItems] = useState<MenuItem[]>(initialItems);
   const supabase = createClient();
 
-  // ── item handlers ──────────────────────────────────────────────────────
-
-  async function handleAddItem(form: ItemForm) {
+  async function handleAddItem(form: MenuForm) {
     const tempId = Date.now().toString();
-    const newItem: Item = {
+    const newItem: MenuItem = {
       id: tempId,
       business_id: businessId,
       category_id: form.category_id,
@@ -34,7 +27,8 @@ export function useMenu(
         ? [
             {
               id: tempId,
-              item_id: tempId,
+              menu_item_id: tempId,
+              boutique_item_id: null,
               business_id: businessId,
               url: form.image_url.trim(),
               sort_order: 0,
@@ -47,7 +41,7 @@ export function useMenu(
     setItems((prev) => [...prev, newItem]);
 
     const { data: insertedItem, error } = await supabase
-      .from("items")
+      .from("menu_items")
       .insert({
         business_id: businessId,
         category_id: form.category_id,
@@ -66,7 +60,8 @@ export function useMenu(
 
     if (form.image_url.trim()) {
       await supabase.from("item_images").insert({
-        item_id: insertedItem.id,
+        menu_item_id: insertedItem.id,
+        boutique_item_id: null,
         business_id: businessId,
         url: form.image_url.trim(),
         sort_order: 0,
@@ -81,7 +76,8 @@ export function useMenu(
               id: insertedItem.id,
               images: newItem.images.map((img) => ({
                 ...img,
-                item_id: insertedItem.id,
+                id: insertedItem.id,
+                menu_item_id: insertedItem.id,
               })),
             }
           : i,
@@ -90,8 +86,8 @@ export function useMenu(
     toast.success("Item added");
   }
 
-  async function handleEditItem(form: ItemForm, existing: Item) {
-    const updatedItem: Item = {
+  async function handleEditItem(form: MenuForm, existing: MenuItem) {
+    const updatedItem: MenuItem = {
       ...existing,
       category_id: form.category_id,
       name: form.name.trim(),
@@ -102,7 +98,8 @@ export function useMenu(
             {
               ...(existing.images?.[0] ?? {
                 id: Date.now().toString(),
-                item_id: existing.id,
+                menu_item_id: existing.id,
+                boutique_item_id: null,
                 business_id: businessId,
                 sort_order: 0,
                 created_at: new Date().toISOString(),
@@ -117,7 +114,7 @@ export function useMenu(
     );
 
     const { error } = await supabase
-      .from("items")
+      .from("menu_items")
       .update({
         category_id: form.category_id,
         name: form.name.trim(),
@@ -142,7 +139,8 @@ export function useMenu(
           .eq("id", existing.images[0].id);
       } else {
         await supabase.from("item_images").insert({
-          item_id: existing.id,
+          menu_item_id: existing.id,
+          boutique_item_id: null,
           business_id: businessId,
           url: form.image_url.trim(),
           sort_order: 0,
@@ -157,7 +155,7 @@ export function useMenu(
     const previous = items;
     setItems((prev) => prev.filter((i) => i.id !== id));
 
-    const { error } = await supabase.from("items").delete().eq("id", id);
+    const { error } = await supabase.from("menu_items").delete().eq("id", id);
 
     if (error) {
       setItems(previous);
@@ -170,17 +168,17 @@ export function useMenu(
 
   async function handleToggleItem(id: string) {
     const previous = items;
+    const item = items.find((i) => i.id === id);
+    if (!item) return;
+
     setItems((prev) =>
       prev.map((i) =>
         i.id === id ? { ...i, is_available: !i.is_available } : i,
       ),
     );
 
-    const item = items.find((i) => i.id === id);
-    if (!item) return;
-
     const { error } = await supabase
-      .from("items")
+      .from("menu_items")
       .update({ is_available: !item.is_available })
       .eq("id", id);
 
@@ -195,84 +193,11 @@ export function useMenu(
     );
   }
 
-  // ── category handlers ──────────────────────────────────────────────────
-
-  async function handleAddCategory(name: string) {
-    const tempId = Date.now().toString();
-    const newCategory: Category = {
-      id: tempId,
-      name,
-      business_id: businessId,
-      sort_order: categories.length,
-      created_at: new Date().toISOString(),
-    };
-    setCategories((prev) => [...prev, newCategory]);
-
-    const { data, error } = await supabase
-      .from("categories")
-      .insert({ business_id: businessId, name, sort_order: categories.length })
-      .select()
-      .single();
-
-    if (error || !data) {
-      setCategories((prev) => prev.filter((c) => c.id !== tempId));
-      toast.error("Failed to add category");
-      return;
-    }
-
-    setCategories((prev) =>
-      prev.map((c) => (c.id === tempId ? { ...newCategory, id: data.id } : c)),
-    );
-    toast.success("Category added");
-  }
-
-  async function handleEditCategory(id: string, name: string) {
-    const previous = categories;
-    setCategories((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, name } : c)),
-    );
-
-    const { error } = await supabase
-      .from("categories")
-      .update({ name })
-      .eq("id", id);
-
-    if (error) {
-      setCategories(previous);
-      toast.error("Failed to update category");
-      return;
-    }
-
-    toast.success("Category updated");
-  }
-
-  async function handleDeleteCategory(id: string) {
-    const previous = categories;
-    const previousItems = items;
-    setCategories((prev) => prev.filter((c) => c.id !== id));
-    setItems((prev) => prev.filter((i) => i.category_id !== id));
-
-    const { error } = await supabase.from("categories").delete().eq("id", id);
-
-    if (error) {
-      setCategories(previous);
-      setItems(previousItems);
-      toast.error("Failed to delete category");
-      return;
-    }
-
-    toast.success("Category deleted");
-  }
-
   return {
     items,
-    categories,
     handleAddItem,
     handleEditItem,
     handleDeleteItem,
     handleToggleItem,
-    handleAddCategory,
-    handleEditCategory,
-    handleDeleteCategory,
   };
 }

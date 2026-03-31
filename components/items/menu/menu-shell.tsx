@@ -4,15 +4,16 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ItemCard } from "./item-card";
-import { ItemDialog } from "./item-dialog";
-import { CategoryDialog } from "./category-dialog";
-import { Item, Category } from "./menu-types";
+import { ItemCard } from "./menu-card";
+import { ItemDialog } from "./menu-dialog";
+import { CategoryDialog } from "../shared/category-dialog";
+import { MenuItem, Category } from "../shared/item-types";
 import { useMenu } from "./use-menu";
+import { useCategories } from "../shared/use-category";
 
 const ALL_TAB = "all";
 
-function getItemsForCategory(categoryId: string, items: Item[]) {
+function getItemsForCategory(categoryId: string, items: MenuItem[]) {
   return items.filter((item) => item.category_id === categoryId);
 }
 
@@ -23,23 +24,24 @@ export default function MenuShell({
 }: {
   businessId: string;
   initialCategories: Category[];
-  initialItems: Item[];
+  initialItems: MenuItem[];
 }) {
-  // all state and DB logic lives in the hook
   const {
     items,
-    categories,
     handleAddItem,
     handleEditItem,
     handleDeleteItem,
     handleToggleItem,
+  } = useMenu(businessId, initialItems);
+
+  const {
+    categories,
     handleAddCategory,
     handleEditCategory,
     handleDeleteCategory,
-  } = useMenu(businessId, initialCategories, initialItems);
+  } = useCategories(businessId, initialCategories);
 
-  // only UI state lives here
-  const [itemDialog, setItemDialog] = useState<Item | "add" | null>(null);
+  const [itemDialog, setItemDialog] = useState<MenuItem | "add" | null>(null);
   const [categoryDialog, setCategoryDialog] = useState(false);
 
   return (
@@ -71,7 +73,7 @@ export default function MenuShell({
           {categories.map((cat) => (
             <div key={cat.id} className="mb-8">
               <h2 className="font-semibold mb-3">{cat.name}</h2>
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
                 {getItemsForCategory(cat.id, items).map((item) => (
                   <ItemCard
                     key={item.id}
@@ -88,7 +90,7 @@ export default function MenuShell({
 
         {categories.map((cat) => (
           <TabsContent key={cat.id} value={cat.id}>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {getItemsForCategory(cat.id, items).map((item) => (
                 <ItemCard
                   key={item.id}
@@ -115,7 +117,7 @@ export default function MenuShell({
                   setItemDialog(null);
                 }
               : (form) => {
-                  handleEditItem(form, itemDialog as Item);
+                  handleEditItem(form, itemDialog as MenuItem);
                   setItemDialog(null);
                 }
           }
@@ -128,7 +130,12 @@ export default function MenuShell({
           categories={categories}
           onAdd={handleAddCategory}
           onEdit={handleEditCategory}
-          onDelete={handleDeleteCategory}
+          onDelete={(id) =>
+            handleDeleteCategory(id, () =>
+              // clear items in deleted category from local state if needed
+              console.log("category deleted", id),
+            )
+          }
           onClose={() => setCategoryDialog(false)}
         />
       )}

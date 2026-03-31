@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { getBusinessBySlug } from "@/lib/get-business-by-slug";
+import { getBusinessBySlug } from "@/lib/public/get-business-by-slug";
 import { CustomerLoginForm } from "@/components/public/auth/public-login-form";
 
 export default async function LoginPage({

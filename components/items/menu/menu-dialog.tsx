@@ -20,10 +20,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Item, Category } from "./menu-types";
+import { MenuItem, Category } from "../shared/item-types";
 
 // This is all the dialog cares about — just what the user fills in
-export type ItemForm = {
+export type MenuForm = {
   name: string;
   description: string;
   price: string;
@@ -32,14 +32,14 @@ export type ItemForm = {
 };
 
 type ItemDialogProps = {
-  item: Item | null; // null = add mode, Item = edit mode
+  item: MenuItem | null; // null = add mode, Item = edit mode
   categoryId: string; // pre-selected category for add mode
   categories: Category[];
-  onSave: (form: ItemForm) => void; // just passes form fields, shell does the rest
+  onSave: (form: MenuForm) => void; // just passes form fields, shell does the rest
   onClose: () => void;
 };
 
-function emptyForm(categoryId: string): ItemForm {
+function emptyForm(categoryId: string): MenuForm {
   return {
     name: "",
     description: "",
@@ -49,7 +49,7 @@ function emptyForm(categoryId: string): ItemForm {
   };
 }
 
-function itemToForm(item: Item): ItemForm {
+function itemToForm(item: MenuItem): MenuForm {
   return {
     name: item.name,
     description: item.description ?? "",
@@ -68,7 +68,7 @@ export function ItemDialog({
 }: ItemDialogProps) {
   const isEditing = item !== null;
 
-  const [form, setForm] = useState<ItemForm>(
+  const [form, setForm] = useState<MenuForm>(
     isEditing ? itemToForm(item) : emptyForm(categoryId),
   );
 

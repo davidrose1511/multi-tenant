@@ -1,4 +1,4 @@
-import { getBusinessBySlug } from "@/lib/get-business-by-slug";
+import { getBusinessBySlug } from "@/lib/public/get-business-by-slug";
 import { createClient } from "@/lib/supabase/server";
 import { CheckoutShell } from "@/components/public/checkout/checkout-shell";
 

@@ -6,6 +6,13 @@ import { z } from "zod";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   Form,
   FormControl,
   FormDescription,
@@ -34,6 +41,9 @@ const formSchema = z
       }),
     email: z.email({
       message: "Please enter a valid email address.",
+    }),
+    businessType: z.enum(["restaurant", "boutique"], {
+      message: "Please select a business type.",
     }),
     password: z
       .string()
@@ -87,6 +97,8 @@ export function SignUpForm() {
         data: {
           business_name: values.businessName,
           slug: values.slug,
+          role: "owner",
+          business_type: values.businessType,
         },
       },
     });
@@ -159,6 +171,30 @@ export function SignUpForm() {
                     Your site: yourdomain.com/{slug}
                   </FormDescription>
                 )}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="businessType"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Business Type</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="bg-background w-full">
+                      <SelectValue placeholder="Select your business type" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent position="popper">
+                    <SelectItem value="restaurant">Restaurant</SelectItem>
+                    <SelectItem value="boutique">Boutique</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}

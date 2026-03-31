@@ -1,0 +1,79 @@
+.boutique-site {
+    /* Backgrounds */
+    --background: 50 100% 95%; /* your warm cream */
+    --foreground: 25 30% 12%; /* very dark warm brown — for all text */
+    --card: 50 60% 97%; /* slightly lighter cream for cards */
+    --card-foreground: 25 30% 12%;
+    --popover: 50 60% 97%;
+    --popover-foreground: 25 30% 12%;
+
+    /* Primary — your blush */
+    --primary: 10 35% 55%;
+    --primary-foreground: 50 100% 97%;
+
+    /* Secondary — warm surface */
+    --secondary: 40 40% 90%;
+    --secondary-foreground: 25 30% 20%;
+
+    /* Muted */
+    --muted: 40 30% 92%;
+    --muted-foreground: 25 15% 45%;
+
+    /* Accent */
+    --accent: 40 40% 88%;
+    --accent-foreground: 25 30% 20%;
+
+    /* Border + Input */
+    --border: 35 25% 70%;
+    --input: 35 25% 82%;
+    --ring: 10 35% 55%;
+
+    --radius: 0.5rem;
+    font-family: var(--font-sans);
+}
+/* Typography — elegant headings */
+.boutique-site h1,
+.boutique-site h2,
+.boutique-site h3 {
+    font-family: var(--font-display, "Cormorant Garamond", Georgia, serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+.boutique-site .heading-editorial {
+    font-family: var(--font-display, "Cormorant Garamond", Georgia, serif);
+    font-style: italic;
+    font-weight: 300;
+}
+
+/* ── Shadcn component overrides ── */
+
+/* Tabs — pill style */
+.boutique-site [role="tablist"] {
+    background: hsl(var(--secondary));
+    border-radius: 99px;
+    padding: 3px;
+    height: auto;
+}
+
+.boutique-site [role="tab"] {
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    height: auto;
+}
+
+.boutique-site [role="tab"][data-state="active"] {
+    background: hsl(var(--background));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    color: hsl(var(--foreground));
+}
+
+/* Cards — no shadow, clean border */
+.boutique-site [data-slot="card"] {
+    box-shadow: none;
+    border-color: hsl(var(--border));
+}

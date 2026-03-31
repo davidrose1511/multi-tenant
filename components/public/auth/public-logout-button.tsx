@@ -1,11 +1,12 @@
+// public-logout-button.tsx
 "use client";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useBusiness } from "@/lib/owner/business-context";
 
-type Props = { slug: string };
-
-export function PublicLogoutButton({ slug }: Props) {
+export function PublicLogoutButton() {
+  const { slug } = useBusiness();
   const router = useRouter();
 
   async function logout() {
