@@ -3,6 +3,7 @@ import { PublicAuthButton } from "../auth/public-auth-buttons";
 import { getCategoriesByBusinessId } from "@/lib/public/get-categories-by-id";
 import { getBusinessBySlug } from "@/lib/public/get-business-by-slug";
 import { Container } from "../shared-components-public/container";
+import { CartIcon } from "../cart/cart-icon";
 
 export default async function BoutiqueHeader({ slug }: { slug: string }) {
   const business = await getBusinessBySlug(slug);
@@ -21,7 +22,8 @@ export default async function BoutiqueHeader({ slug }: { slug: string }) {
           </Link>
 
           {/* Auth — pinned right */}
-          <div className="absolute right-0 flex items-center gap-3">
+          <div className="ml-16 absolute right-0 flex items-center gap-3">
+            <CartIcon />
             <PublicAuthButton slug={slug} />
           </div>
         </div>
