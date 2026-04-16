@@ -1,4 +1,4 @@
-import { LoginForm } from "@/components/login-form";
+import { LoginForm } from "@/components/dashboard-components/dashboard-auth/login-form";
 
 export default function Page() {
   return (

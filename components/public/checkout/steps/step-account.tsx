@@ -19,8 +19,8 @@ export function StepAccount({ step, setStep, user, slug }: Props) {
     <div
       className={isActive || isComplete ? "" : "opacity-40 pointer-events-none"}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-base">Account</h2>
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-semibold text-xl">Account</h2>
         {isComplete && (
           <button
             className="text-xs text-muted-foreground hover:underline"
@@ -47,11 +47,7 @@ export function StepAccount({ step, setStep, user, slug }: Props) {
                   {user.email}
                 </span>
               </p>
-              <Button
-                onClick={() => setStep(2)}
-                style={{ backgroundColor: "var(--theme-color)" }}
-                className="text-white"
-              >
+              <Button onClick={() => setStep(2)} className="text-white">
                 Continue
               </Button>
             </div>
@@ -77,11 +73,7 @@ export function StepAccount({ step, setStep, user, slug }: Props) {
                 >
                   Sign up
                 </Button>
-                <Button
-                  onClick={() => setStep(2)}
-                  style={{ backgroundColor: "var(--theme-color)" }}
-                  className="text-white"
-                >
+                <Button onClick={() => setStep(2)} className="text-white">
                   Continue as Guest
                 </Button>
               </div>

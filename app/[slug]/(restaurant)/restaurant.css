@@ -1,0 +1,114 @@
+.restaurant-site {
+    /* Backgrounds */
+    --background: 138 18% 95%; /* #f8faf8 — soft mint white */
+    --foreground: 165 8% 14%; /* #191c1b — on-surface, not pure black */
+    --card: 138 18% 100%; /* #ffffff — surface-container-lowest */
+    --card-foreground: 165 8% 14%;
+    --popover: 138 18% 100%;
+    --popover-foreground: 165 8% 14%;
+
+    /* Primary — Deep Trust Blue-Green (#476800) */
+    --primary: 84 100% 20%;
+    --primary-foreground: 84 100% 97%;
+
+    /* Primary Container — Vibrant Leaf (#84bd00) */
+    --primary-container: 84 100% 37%;
+    --primary-container-foreground: 84 100% 97%;
+
+    /* Secondary — soft sage surface */
+    --secondary: 138 15% 90%; /* surface-container-low #f2f4f2 */
+    --secondary-foreground: 165 8% 20%;
+
+    /* Muted */
+    --muted: 138 12% 92%;
+    --muted-foreground: 165 8% 42%;
+
+    /* Accent — Earth Orange/Amber (tertiary, use sparingly) */
+    --accent: 35 90% 52%;
+    --accent-foreground: 35 90% 10%;
+
+    /* Border + Input */
+    --border: 138 10% 78%;
+    --input: 138 10% 88%;
+    --ring: 84 100% 20%;
+
+    /* Radius — "Soft-Modern" as per design system */
+    --radius: 0.75rem;
+    --radius-xl: 1.5rem;
+
+    /* Custom design tokens */
+    --surface: 138 18% 95%;
+    --surface-container-low: 138 15% 90%;
+    --surface-container-lowest: 0 0% 100%;
+    --glass-bg: hsla(84, 100%, 97%, 0.8);
+    --glass-blur: 12px;
+    --gradient-cta: linear-gradient(
+        135deg,
+        hsl(84, 100%, 20%),
+        hsl(84, 100%, 37%)
+    );
+    --shadow-ambient: 0 20px 40px hsla(160, 10%, 10%, 0.04);
+}
+
+body:has(.restaurant-site) {
+    font-family: var(--font-manrope);
+    --background: 138 18% 95%;
+    --foreground: 165 8% 14%;
+    --card: 138 18% 100%;
+    --card-foreground: 165 8% 14%;
+    --popover: 138 18% 100%;
+    --popover-foreground: 165 8% 14%;
+    --primary: 84 100% 20%;
+    --primary-foreground: 84 100% 97%;
+    --primary-container: 84 100% 37%;
+    --primary-container-foreground: 84 100% 97%;
+    --secondary: 138 15% 90%;
+    --secondary-foreground: 165 8% 20%;
+    --muted: 138 12% 92%;
+    --muted-foreground: 165 8% 42%;
+    --accent: 35 90% 52%;
+    --accent-foreground: 35 90% 10%;
+    --border: 138 10% 78%;
+    --input: 138 10% 88%;
+    --ring: 84 100% 20%;
+}
+
+.restaurant-site * {
+    font-family: var(--font-manrope);
+}
+
+/* Typography — editorial authority */
+.restaurant-site h1,
+.restaurant-site h2,
+.restaurant-site h3 {
+    font-family: var(--font-jakarta);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.restaurant-site h4,
+.restaurant-site h5,
+.restaurant-site h6 {
+    font-family: var(--font-jakarta);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.restaurant-site p,
+.restaurant-site span,
+.restaurant-site li {
+    line-height: 1.7;
+}
+
+.restaurant-site .heading-display {
+    font-family: var(--font-jakarta);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.restaurant-site button {
+    cursor: pointer;
+    border-radius: var(--radius-xl);
+}

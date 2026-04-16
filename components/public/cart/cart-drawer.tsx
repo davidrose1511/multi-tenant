@@ -9,15 +9,18 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { useCart } from "@/components/public/cart/cart-provider";
-import { useBusiness } from "@/lib/owner/business-context";
+import { useCart } from "@/lib/contexts/cart-provider";
+import { useBusiness } from "@/lib/contexts/business-context";
 
 export function CartDrawerContent() {
   const { items, removeItem, updateQuantity, total, totalItems } = useCart();
   const { slug } = useBusiness();
 
   return (
-    <SheetContent side="right" className="w-full sm:max-w-md p-0 flex flex-col">
+    <SheetContent
+      side="right"
+      className="w-[85vw] sm:max-w-md p-0 flex flex-col"
+    >
       {/* ── Header ── */}
       <SheetHeader className="px-6 py-5 border-b border-border">
         <div className="flex items-center justify-between">
@@ -38,13 +41,7 @@ export function CartDrawerContent() {
           <p className="text-sm text-muted-foreground">Your cart is empty.</p>
           {/* Use SheetClose to automatically trigger close animations */}
           <SheetClose asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-[11px] tracking-widest uppercase rounded-none"
-            >
-              Continue Shopping
-            </Button>
+            <Button size="default">Continue Shopping</Button>
           </SheetClose>
         </div>
       ) : (
@@ -61,10 +58,7 @@ export function CartDrawerContent() {
             </div>
             {/* Wrap the checkout button in SheetClose */}
             <SheetClose asChild>
-              <Button
-                asChild
-                className="rounded-none text-[11px] tracking-widest uppercase px-6"
-              >
+              <Button asChild className="px-6">
                 <a href={`/${slug}/checkout`}>Checkout</a>
               </Button>
             </SheetClose>
@@ -163,10 +157,7 @@ export function CartDrawerContent() {
             </p>
             {/* Wrap the bottom checkout button in SheetClose */}
             <SheetClose asChild>
-              <Button
-                asChild
-                className="w-full rounded-none text-[11px] tracking-widest uppercase h-12"
-              >
+              <Button asChild className="w-full   h-12">
                 <a href={`/${slug}/checkout`}>
                   Checkout · ₹{total.toLocaleString("en-IN")}
                 </a>

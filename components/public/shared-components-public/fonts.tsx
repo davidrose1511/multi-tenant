@@ -1,17 +1,17 @@
 // components/public/shared-components-public/fonts.tsx
-import { Cormorant_Garamond, Tenor_Sans } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 
 export const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   style: ["normal", "italic"],
-  variable: "--font-display", // keep this for headings
+  variable: "--font-display",
   display: "swap",
 });
 
-export const tenorSans = Tenor_Sans({
+export const jost = Jost({
   subsets: ["latin"],
   weight: ["400"],
-  variable: "--font-sans", // we'll alias this to --font-sans below
+  variable: "--font-jost",
   display: "swap",
 });

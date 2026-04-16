@@ -4,9 +4,9 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
-import { AppSidebar } from "@/components/layout/app-sidebar";
-import { getBusiness } from "@/lib/owner/get-business";
-import { BusinessProvider } from "@/lib/owner/business-context";
+import { AppSidebar } from "@/components/dashboard-components/layout/app-sidebar";
+import { getBusiness } from "@/lib/dashboard-fetches/get-business";
+import { BusinessProvider } from "@/lib/contexts/business-context";
 
 export default async function ProtectedLayout({
   children,

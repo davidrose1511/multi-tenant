@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCart } from "./cart-provider";
+import { useCart } from "@/lib/contexts/cart-provider";
 
 export function CartBar({ slug }: { slug: string }) {
   const { totalItems, total, mounted } = useCart();
@@ -16,7 +16,6 @@ export function CartBar({ slug }: { slug: string }) {
         <Button
           asChild
           className="w-full h-14 text-white shadow-lg rounded-2xl flex items-center justify-between px-5"
-          style={{ backgroundColor: "var(--theme-color)" }}
         >
           <Link href={`/${slug}/checkout`}>
             <div className="flex items-center gap-2">

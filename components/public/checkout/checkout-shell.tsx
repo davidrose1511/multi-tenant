@@ -7,13 +7,14 @@ import { StepAddress } from "./steps/step-address";
 import { StepPayment } from "./steps/step-payment";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
+import { Container } from "../shared-components-public/container";
+import { Separator } from "@/components/ui/separator";
 
 export type Business = {
   id: string;
   name: string;
   slug: string;
   address: string | null;
-  theme_color: string | null;
   whatsapp_number: string | null;
 };
 
@@ -88,10 +89,13 @@ export function CheckoutShell({ business, user, customer, slug }: Props) {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-xl font-bold mb-8">Checkout</h1>
+    <Container className="md:mt-32 mt-20 mx-auto max-w-7xl">
+      <h1 className="md:text-6xl text-5xl font-bold mb-2 heading-editorial">
+        Checkout
+      </h1>
+      <Separator />
 
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="flex flex-col lg:flex-row gap-4 md:gap-12 mt-4 md:mt-8">
         {/* Left: stepper */}
         <div className="flex-1">
           {STEPS.map((s, i) => (
@@ -107,19 +111,6 @@ export function CheckoutShell({ business, user, customer, slug }: Props) {
                         ? "border-current"
                         : "text-muted-foreground border-muted",
                   )}
-                  style={
-                    step > s.number
-                      ? {
-                          backgroundColor: "var(--theme-color)",
-                          borderColor: "var(--theme-color)",
-                        }
-                      : step === s.number
-                        ? {
-                            color: "var(--theme-color)",
-                            borderColor: "var(--theme-color)",
-                          }
-                        : {}
-                  }
                 >
                   {step > s.number ? <Check className="h-4 w-4" /> : s.number}
                 </div>
@@ -130,16 +121,16 @@ export function CheckoutShell({ business, user, customer, slug }: Props) {
               </div>
 
               {/* Step content — heading naturally aligns with circle */}
-              <div className="flex-1 pb-10">{stepComponents[i]}</div>
+              <div className="flex-1 pb-6 md:pb-8">{stepComponents[i]}</div>
             </div>
           ))}
         </div>
 
         {/* Right: order summary */}
-        <div className="lg:w-80 lg:shrink-0">
+        <div className="lg:w-1/2 lg:shrink-0">
           <OrderSummary business={business} />
         </div>
       </div>
-    </div>
+    </Container>
   );
 }

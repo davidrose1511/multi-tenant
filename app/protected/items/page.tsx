@@ -1,14 +1,14 @@
 import { createClient } from "@/lib/supabase/server";
-import { getBusiness } from "@/lib/owner/get-business";
-import MenuShell from "@/components/items/menu/menu-shell";
-import BoutiqueShell from "@/components/items/boutique/boutique-shell";
+import { getBusiness } from "@/lib/dashboard-fetches/get-business";
+import MenuShell from "@/components/dashboard-components/items/menu/menu-shell";
+import BoutiqueShell from "@/components/dashboard-components/items/boutique/boutique-shell";
 import {
   Category,
   CategoryWithMenuItems,
   CategoryWithBoutiqueItems,
   MenuItem,
   BoutiqueItem,
-} from "@/components/items/shared/item-types";
+} from "@/components/dashboard-components/items/shared/item-types";
 
 export default async function MenuPage() {
   const supabase = await createClient();

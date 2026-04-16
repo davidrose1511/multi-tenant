@@ -1,4 +1,4 @@
-import { CustomersShell } from "@/components/customers/customers-shell";
+import { CustomersShell } from "@/components/dashboard-components/customers/customers-shell";
 
 export default function MenuPage() {
   return (

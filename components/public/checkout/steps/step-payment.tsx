@@ -26,7 +26,7 @@ export function StepPayment({
 
   return (
     <div className={isActive ? "" : "opacity-40 pointer-events-none"}>
-      <h2 className="font-semibold text-base mb-4">Payment</h2>
+      <h2 className="font-semibold text-xl mb-3">Payment</h2>
 
       {isActive && (
         <div className="space-y-4">
@@ -45,7 +45,6 @@ export function StepPayment({
             </Button>
             <Button
               className="text-white"
-              style={{ backgroundColor: "var(--theme-color)" }}
               onClick={() => router.push(`/${slug}/payment`)}
             >
               Proceed to Payment

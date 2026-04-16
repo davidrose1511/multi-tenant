@@ -117,8 +117,8 @@ export function StepAddress({
     <div
       className={isActive || isComplete ? "" : "opacity-40 pointer-events-none"}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-base">Address</h2>
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-semibold text-xl">Address</h2>
         {isComplete && (
           <button
             className="text-xs text-muted-foreground hover:underline"
@@ -153,11 +153,6 @@ export function StepAddress({
                   checkoutData.deliveryType === type ? "default" : "outline"
                 }
                 size="sm"
-                style={
-                  checkoutData.deliveryType === type
-                    ? { backgroundColor: "var(--theme-color)", color: "white" }
-                    : {}
-                }
                 onClick={() => update({ deliveryType: type })}
               >
                 {type === "delivery"
@@ -218,11 +213,6 @@ export function StepAddress({
                       className={`p-3 rounded-lg border text-sm cursor-pointer transition-colors ${
                         useSavedAddress ? "bg-muted/50" : "border-border"
                       }`}
-                      style={
-                        useSavedAddress
-                          ? { borderColor: "var(--theme-color)" }
-                          : {}
-                      }
                       onClick={() => {
                         setUseSavedAddress(true);
                         deliveryForm.setValue(
@@ -236,7 +226,6 @@ export function StepAddress({
                     <button
                       type="button"
                       className="text-xs hover:underline"
-                      style={{ color: "var(--theme-color)" }}
                       onClick={() => {
                         setUseSavedAddress(false);
                         deliveryForm.setValue("address", "");
@@ -294,11 +283,7 @@ export function StepAddress({
                   >
                     ← Back
                   </Button>
-                  <Button
-                    type="submit"
-                    style={{ backgroundColor: "var(--theme-color)" }}
-                    className="text-white"
-                  >
+                  <Button type="submit" className="text-white">
                     Continue
                   </Button>
                 </div>
@@ -388,11 +373,7 @@ export function StepAddress({
                     >
                       ← Back
                     </Button>
-                    <Button
-                      type="submit"
-                      style={{ backgroundColor: "var(--theme-color)" }}
-                      className="text-white"
-                    >
+                    <Button type="submit" className="text-white">
                       Continue
                     </Button>
                   </div>
